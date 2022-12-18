@@ -1,5 +1,6 @@
 package proyecto;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import javax.naming.OperationNotSupportedException;
 
@@ -102,9 +103,33 @@ public class SparseMatrixCoordinateFormat {
     }
 
     public int[] getColumn(int j) throws OperationNotSupportedException {
-        //No usar this.matrix aqui.
-        throw new OperationNotSupportedException();
+        ArrayList<Integer> columns1 = new ArrayList<Integer>();
+        ArrayList<Integer> resultante = new ArrayList<Integer>(8);
+
+        int result[] = new int[size_row];
+
+        for (int i = 0; i < result.length; i++){
+            result[i] = 0;
+        }
+
+        for (int i = 0; i < rows.length; i++){
+            if(columns[i] == j){
+                columns1.add(this.rows[i]);
+            }
+        }
+
+        for (int i = 0; i < result.length; i++){
+            for (Integer elemento : columns1){
+                if(i == elemento){
+                    result[i] = this.getElement(elemento,j);
+                }
+            }
+
+        }
+
+        return result;
     }
+
 
     public void setValue(int i, int j, int value) throws OperationNotSupportedException {
         //Cambiar los atributos rows, cols, values y matrix aqui
@@ -117,8 +142,14 @@ public class SparseMatrixCoordinateFormat {
      */
     public SparseMatrixCoordinateFormat getSquareMatrix() throws OperationNotSupportedException {
         SparseMatrixCoordinateFormat squaredMatrix = new SparseMatrixCoordinateFormat();
-        //Usar los metodos Set aqui de los atributos
-        throw new OperationNotSupportedException();
+
+        for (int i = 0; i < this.rows.length; i++) {
+            this.values[i] = (int) Math.pow(this.values[i], 2);
+        }
+        squaredMatrix.setRows(this.rows);
+        squaredMatrix.setColumns(this.columns);
+        squaredMatrix.setValues(this.values);
+        return squaredMatrix;
     }
 
     /*
