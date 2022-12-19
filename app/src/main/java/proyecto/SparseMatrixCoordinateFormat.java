@@ -1,14 +1,13 @@
 package proyecto;
 
 import java.sql.SQLOutput;
-import java.util.ArrayList;
+import java.util.*;
 import javax.naming.OperationNotSupportedException;
 
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 public class SparseMatrixCoordinateFormat {
 
@@ -29,6 +28,8 @@ public class SparseMatrixCoordinateFormat {
 
     private int size_row;
     private int size_column;
+    //private Map<String, Integer> elem;
+    //private int valDef;
 
     public void createRepresentation(String inputFile) throws OperationNotSupportedException, FileNotFoundException {
         //Load data
@@ -108,33 +109,58 @@ public class SparseMatrixCoordinateFormat {
 
         int result[] = new int[size_row];
 
-        for (int i = 0; i < result.length; i++){
+        for (int i = 0; i < result.length; i++) {
             result[i] = 0;
         }
-
-        for (int i = 0; i < rows.length; i++){
-            if(columns[i] == j){
+        for (int i = 0; i < rows.length; i++) {
+            if (columns[i] == j) {
                 columns1.add(this.rows[i]);
             }
         }
-
-        for (int i = 0; i < result.length; i++){
-            for (Integer elemento : columns1){
-                if(i == elemento){
-                    result[i] = this.getElement(elemento,j);
+        for (int i = 0; i < result.length; i++) {
+            for (Integer elemento : columns1) {
+                if (i == elemento) {
+                    result[i] = this.getElement(elemento, j);
                 }
             }
-
         }
-
         return result;
     }
 
-
     public void setValue(int i, int j, int value) throws OperationNotSupportedException {
-        //Cambiar los atributos rows, cols, values y matrix aqui
+        /*if (value == 0) {
+            return;
+        }
+        Triplet triplets = new Triplet(i, j, value);
+
+        for (int k = 0; k < triplets.size(); k++) {
+            Triplet triplet = triplets.get(k);
+            if (triplet.row == i && triplet.col == j) {
+                // Si se encuentra una tripleta con la fila y columna especificadas, se actualiza su valor
+                triplet.value = value;
+                return;*/
         throw new OperationNotSupportedException();
     }
+
+
+    /*public SparseMatrixCoordinateFormat(int valorPorDefecto) {
+        this.elem = new HashMap<>();
+        this.valDef = valorPorDefecto;
+    }
+
+    public void setValue(int i, int j, int value) throws OperationNotSupportedException {
+        if (value == valDef) {
+            elem.remove(getKey(i,j));
+        } else {
+            elem.put(getKey(i,j),value);
+        }
+        System.out.println(elem);
+    }
+
+    private String getKey(int fila, int columna) {
+        return fila + "," + columna;
+    }*/
+
 
     /*
      * This method returns a representation of the Squared matrix
@@ -161,5 +187,39 @@ public class SparseMatrixCoordinateFormat {
         //Usar los metodos Set aqui de los atributos
         throw new OperationNotSupportedException();
     }
-
 }
+
+    /*public class Triplet {
+        @Setter
+        @Getter
+        public int row;
+        @Setter
+        @Getter
+        public int col;
+        @Setter
+        @Getter
+        public int value;
+        private List<Triplet> triplets;
+
+        public Triplet(int row, int col, int value) {
+            this.row = row;
+            this.col = col;
+            this.value = value;
+            this.triplets = new ArrayList<>();
+        }
+
+        public List<Triplet> getTriplets() {
+            return triplets;
+        }
+
+        public int size() {
+            return triplets.size();
+        }
+
+
+    }
+
+}*/
+
+
+
