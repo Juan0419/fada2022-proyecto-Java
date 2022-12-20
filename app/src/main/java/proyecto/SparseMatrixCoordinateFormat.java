@@ -128,6 +128,8 @@ public class SparseMatrixCoordinateFormat {
     }
 
     public void setValue(int i, int j, int value) throws OperationNotSupportedException {
+
+
         /*if (value == 0) {
             return;
         }
@@ -184,8 +186,54 @@ public class SparseMatrixCoordinateFormat {
      */
     public SparseMatrixCoordinateFormat getTransposedMatrix() throws OperationNotSupportedException {
         SparseMatrixCoordinateFormat squaredMatrix = new SparseMatrixCoordinateFormat();
-        //Usar los metodos Set aqui de los atributos
-        throw new OperationNotSupportedException();
+
+        int [][] newmat = new int[matrix[0].length][matrix.length]; // Creacion de nueva matriz donde se hara el cambio
+
+        for (int j = 0; j < matrix[0].length; j++) {
+            for (int i = 0; i < matrix.length; i++) {
+                newmat[j][i] =matrix[i][j];
+            }
+        }
+        squaredMatrix.setMatrix(newmat); // Recorrido de matriz y llenado de la nueva con diferentes valores
+
+        int numcol=0;
+        int numrow=0;
+        int numelem=0; //Reinicia el array en el valor necesario
+        int numvalue=0;
+
+        for (int [] filas: newmat) {
+            for (int elemento : filas) {
+                if( elemento !=0){
+                    numelem++;
+                }
+            }
+        }
+        //Numero de elementos creando los arrays con las capacidades correspondientes
+        int[] nuevasfilas = new int[numelem];
+        int[]  nuevasColumnas = new int[numelem];
+        int[] nuevosValores = new int[numelem];
+
+
+        for (int i = 0; i < newmat.length; i++) {
+            for (int j = 0; j < newmat[0].length; j++) {
+                if(newmat[i][j] != 0) {
+                    // Llanado de la nueva matriz con el cambio de columnas por filas y filas por columnas
+                    nuevasfilas[numrow] = i;
+                    nuevasColumnas[numcol] = j;
+                    nuevosValores[numvalue] = newmat[i][j];
+
+                    numrow++;
+                    numcol++;
+                    numvalue++;
+                }
+            }
+        }
+        // Dando valores seteando cada valor
+        squaredMatrix.setRows(nuevasfilas);
+        squaredMatrix.setColumns(nuevasColumnas);
+        squaredMatrix.setValues(nuevosValores);
+
+        return squaredMatrix;
     }
 }
 
