@@ -3,6 +3,7 @@ package proyecto;
 import javax.naming.OperationNotSupportedException;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.FileNotFoundException;
 import java.util.Arrays;
@@ -11,10 +12,13 @@ public class SparseMatrixCSR {
     private LoadFile loader = LoadFile.getInstance();
     private int[][] matrix;
     @Getter
+    @Setter
     private int[] rows;
     @Getter
+    @Setter
     private int[] columns;
     @Getter
+    @Setter
     private int[] values;
 
     public void createRepresentation(String inputFile) throws OperationNotSupportedException, FileNotFoundException {
@@ -99,8 +103,17 @@ public class SparseMatrixCSR {
      */
     public SparseMatrixCSR getSquareMatrix() throws OperationNotSupportedException {
         SparseMatrixCSR squaredMatrix = new SparseMatrixCSR();
-        throw new OperationNotSupportedException();
+
+        for (int i = 0; i < this.values.length; i++) {
+            this.values[i] = (int) Math.pow(this.values[i], 2);
+        }
+
+        squaredMatrix.setRows(this.rows);
+        squaredMatrix.setColumns(this.columns);
+        squaredMatrix.setValues(this.values);
+        return squaredMatrix;
     }
+
 
     /*
      * This method returns a representation of the transposed matrix
