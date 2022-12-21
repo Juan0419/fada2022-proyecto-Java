@@ -58,9 +58,7 @@ public class SparseMatrixCoordinateFormat {
 
         for (int i = 0; i < values.length; i++) {
             values[i] = value.get(i);
-
             rows[i] = row.get(i);
-
             columns[i] = column.get(i);
         }
 
@@ -79,11 +77,6 @@ public class SparseMatrixCoordinateFormat {
             // Por ende retorna cero
             return 0; // Al no encontrar el elemento, devuelve cero
         }
-            /*int c = representacion[0][i];
-        while (c < j) {
-            c++;
-        }
-        return representacion[2][c];*/
         throw new OperationNotSupportedException();
     }
 
@@ -104,24 +97,10 @@ public class SparseMatrixCoordinateFormat {
     }
 
     public int[] getColumn(int j) throws OperationNotSupportedException {
-        ArrayList<Integer> columns1 = new ArrayList<Integer>();
-        ArrayList<Integer> resultante = new ArrayList<Integer>(8);
-
-        int result[] = new int[size_row];
-
-        for (int i = 0; i < result.length; i++) {
-            result[i] = 0;
-        }
+        int[] result = new int[size_row]; // Arreglo resultante el cual es hecho con el tamaño de la fila
         for (int i = 0; i < rows.length; i++) {
             if (columns[i] == j) {
-                columns1.add(this.rows[i]);
-            }
-        }
-        for (int i = 0; i < result.length; i++) {
-            for (Integer elemento : columns1) {
-                if (i == elemento) {
-                    result[i] = this.getElement(elemento, j);
-                }
+                result[rows[i]] = this.getElement(rows[i], j); //Recorrido y llenado del arreglo
             }
         }
         return result;
@@ -187,36 +166,36 @@ public class SparseMatrixCoordinateFormat {
     public SparseMatrixCoordinateFormat getTransposedMatrix() throws OperationNotSupportedException {
         SparseMatrixCoordinateFormat squaredMatrix = new SparseMatrixCoordinateFormat();
 
-        int [][] newmat = new int[matrix[0].length][matrix.length]; // Creacion de nueva matriz donde se hara el cambio
+        int[][] newmat = new int[matrix[0].length][matrix.length]; // Creacion de nueva matriz donde se hara el cambio
 
         for (int j = 0; j < matrix[0].length; j++) {
             for (int i = 0; i < matrix.length; i++) {
-                newmat[j][i] =matrix[i][j];
+                newmat[j][i] = matrix[i][j];
             }
         }
         squaredMatrix.setMatrix(newmat); // Recorrido de matriz y llenado de la nueva con diferentes valores
 
-        int numcol=0;
-        int numrow=0;
-        int numelem=0; //Reinicia el array en el valor necesario
-        int numvalue=0;
+        int numcol = 0;
+        int numrow = 0;
+        int numelem = 0; //Reinicia el array en el valor necesario
+        int numvalue = 0;
 
-        for (int [] filas: newmat) {
+        for (int[] filas : newmat) {
             for (int elemento : filas) {
-                if( elemento !=0){
+                if (elemento != 0) {
                     numelem++;
                 }
             }
         }
         //Numero de elementos creando los arrays con las capacidades correspondientes
         int[] nuevasfilas = new int[numelem];
-        int[]  nuevasColumnas = new int[numelem];
+        int[] nuevasColumnas = new int[numelem];
         int[] nuevosValores = new int[numelem];
 
 
         for (int i = 0; i < newmat.length; i++) {
             for (int j = 0; j < newmat[0].length; j++) {
-                if(newmat[i][j] != 0) {
+                if (newmat[i][j] != 0) {
                     // Llanado de la nueva matriz con el cambio de columnas por filas y filas por columnas
                     nuevasfilas[numrow] = i;
                     nuevasColumnas[numcol] = j;
