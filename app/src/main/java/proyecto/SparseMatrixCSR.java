@@ -74,21 +74,21 @@ public class SparseMatrixCSR {
     }
 
     public int[] getRow(int i) throws OperationNotSupportedException {
-        int maxCol = columns[0];
+        int maxCol = columns[0]; // Inicializando la max con el primer valor de columns
 
         for (int j : columns) {
             if (j > maxCol)
-                maxCol = j;
+                maxCol = j; // Si el valor de j es mayor que maxcol se actualiza maxcol
         }
         int col_ini = rows[i];
-        int[] filaAns = new int[maxCol + 1];
+        int[] filaGet = new int[maxCol + 1];
 
 
         for (int colAux = col_ini; colAux < rows[i + 1]; colAux++) {
-            int var = columns[colAux];
-            filaAns[var] = values[colAux];
+            int var = columns[colAux]; // en la posicion  de la variable del for se inicializa la variable
+            filaGet[var] = values[colAux]; // Se asigna el valor de este elemnto en la posicion auxiliar
         }
-        return filaAns;
+        return filaGet;
     }
 
     public int[] getColumn(int j) throws OperationNotSupportedException {
