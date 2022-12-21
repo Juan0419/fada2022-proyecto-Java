@@ -71,19 +71,18 @@ public class SparseMatrixCSC {
     }
 
     public int[] getRow(int i) throws OperationNotSupportedException {
-        /*int[] row = new int[columns.length-1];
-        boolean rowExist = false;
+        int[] row = new int[columns.length - 1];
+        boolean exist = false; // Se evaluea si existe la fila
 
-        for (int r: rows){
-            if (r == i){
-                rowExist = true;
-                break;
+        for (int r : rows) { // Recorrido y evaluacion de existencia de las filas
+            if (r == i) {
+                exist = true;
             }
         }
-        if (rowExist){
+        if (exist) { // Evaluacion de obtencion de resultados de los recorridos de las filas
             for (int j = 0; j < row.length; j++) {
-                if (columns[j] != columns[j+1]) {
-                    for (int r = columns[j]; r < columns[j+1]; r++){
+                if (columns[j] != columns[j + 1]) {
+                    for (int r = columns[j]; r < columns[j + 1]; r++) {
                         if (rows[r] == i) {
                             row[j] = values[r];
                         }
@@ -91,21 +90,19 @@ public class SparseMatrixCSC {
                 }
             }
         }
-        return row;*/
-        throw new OperationNotSupportedException();
+        return row;
     }
 
     public int[] getColumn(int j) throws OperationNotSupportedException {
-        /*int[] column = new int[matrix.length];
+        int[] col = new int[matrix.length];
 
-        // row es la posición del arreglo rows desde donde empieza la columna
-        if (columns[j] != columns[j+1]) {
-            for (int row = columns[j]; row < columns[j+1]; row++){
-                column[rows[row]] = values[row];
+        // Evaluacion  de  la fila row  la cual es la posición del arreglo rows desde donde empieza la columna
+        if (columns[j] != columns[j + 1]) {
+            for (int row = columns[j]; row < columns[j + 1]; row++) {
+                col[rows[row]] = values[row];
             }
         }
-        return column;*/
-        throw new OperationNotSupportedException();
+        return col;
     }
 
     public void setValue(int i, int j, int value) throws OperationNotSupportedException {

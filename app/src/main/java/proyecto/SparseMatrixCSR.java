@@ -58,18 +58,6 @@ public class SparseMatrixCSR {
     }
 
     public int getElement(int i, int j) throws OperationNotSupportedException {
-        /*int jb = rows[i];
-        int pos = columns[jb];
-
-        while (pos != j) {
-
-            jb++;
-            if (jb > columns.length) {
-                pos = 0;
-                break;
-            }
-        }
-        return values[pos];*/
         throw new OperationNotSupportedException();
     }
 
