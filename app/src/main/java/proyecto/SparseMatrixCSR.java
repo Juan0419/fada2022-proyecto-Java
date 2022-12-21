@@ -10,6 +10,8 @@ import java.util.Arrays;
 
 public class SparseMatrixCSR {
     private LoadFile loader = LoadFile.getInstance();
+    @Getter
+    @Setter
     private int[][] matrix;
     @Getter
     @Setter
@@ -90,7 +92,19 @@ public class SparseMatrixCSR {
     }
 
     public int[] getColumn(int j) throws OperationNotSupportedException {
-        throw new OperationNotSupportedException();
+        int[] arrCol = new int[rows.length - 1]; // Definiendo un arreglo para guardar columnas
+
+        for (int i = 0; i < rows.length - 1; i++) {
+            arrCol[i] = 0; // Inicializa el elemento en cero
+
+            for (int k = rows[i]; k < rows[i + 1]; k++) {
+                if (columns[k] == j) {
+                    arrCol[i] = values[k];
+                    break; // sale del ciclo interno una vez que encuentra un elemento no nulo
+                }
+            }
+        }
+        return arrCol;
     }
 
     public void setValue(int i, int j, int value) throws OperationNotSupportedException {
@@ -119,9 +133,33 @@ public class SparseMatrixCSR {
      * This method returns a representation of the transposed matrix
      * @return object that contests the transposed matrix;
      */
-    public SparseMatrixCSR getTransposedMatrix() throws OperationNotSupportedException {
-        SparseMatrixCSR squaredMatrix = new SparseMatrixCSR();
-        throw new OperationNotSupportedException();
+    public SparseMatrixCSR getTransposedMatrix() {
+        SparseMatrixCSR transposedMatrix = new SparseMatrixCSR();
+        // Se usa la matriz instanciada anteriormente para setear los valores
+        transposedMatrix.setValues(values);
+        transposedMatrix.setColumns(columns);
+
+        // Crea un nuevo arreglo, uno de filas para la matriz transpuesta
+        int[] transposedRows = new int[matrix[0].length + 1];
+
+        int rowI = 0; // Indices filas
+        int valueI = 0; // Indices valores
+        for (int j = 0; j < matrix[0].length; j++) {
+            transposedRows[rowI] = valueI;
+            for (int i = 0; i < matrix.length; i++) {
+                if (matrix[i][j] != 0) {
+                    values[valueI] = matrix[i][j];
+                    columns[valueI] = i;
+                    valueI++;
+                }
+            }
+            rowI++;
+        }
+        transposedRows[rowI] = valueI;
+
+        transposedMatrix.setRows(transposedRows);
+
+        return transposedMatrix;
     }
 
 }
