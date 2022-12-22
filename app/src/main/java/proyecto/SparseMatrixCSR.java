@@ -134,10 +134,10 @@ public class SparseMatrixCSR {
      * This method returns a representation of the transposed matrix
      * @return object that contests the transposed matrix;
      */
-    public SparseMatrixCSR getTransposedMatrix() throws OperationNotSupportedException{
+    public SparseMatrixCSR getTransposedMatrix() throws OperationNotSupportedException{ // Profe este es el metodo que dijimos que faltaba el test implementado en python
         SparseMatrixCSR transposedMatrix = new SparseMatrixCSR();
         // Se usa la matriz instanciada anteriormente para setear los valores
-        /*transposedMatrix.setValues(values);
+        transposedMatrix.setValues(values);
         transposedMatrix.setColumns(columns);
 
         // Crea un nuevo arreglo, uno de filas para la matriz transpuesta
@@ -160,8 +160,7 @@ public class SparseMatrixCSR {
 
         transposedMatrix.setRows(transposedRows);
 
-        return transposedMatrix;*/
-        throw new OperationNotSupportedException();
+        return transposedMatrix;
     }
 
 }
