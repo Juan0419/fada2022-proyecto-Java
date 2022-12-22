@@ -12,6 +12,7 @@ import java.util.List;
 
 public class SparseMatrixCSC {
     private LoadFile loader = LoadFile.getInstance();
+    @Setter
     private int[][] matrix;
     @Setter
     @Getter
@@ -23,11 +24,20 @@ public class SparseMatrixCSC {
     @Getter
     private int[] values;
 
+    private int size_rows;
+    private int size_columns;
+
     public void createRepresentation(String inputFile) throws OperationNotSupportedException, FileNotFoundException {
         //Load data
         loader.loadFile(inputFile);
         matrix = loader.getMatrix();
+        representation(matrix);
 
+    }
+
+    public void representation(int[][] matrix){
+        size_rows = matrix.length;
+        size_columns = matrix[0].length;
         int size = 0;
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -115,15 +125,14 @@ public class SparseMatrixCSC {
      */
     public SparseMatrixCSC getSquareMatrix() throws OperationNotSupportedException {
         SparseMatrixCSC squaredMatrix = new SparseMatrixCSC();
-        /*for (int i = 0; i < this.values.length; i++) {
-            this.values[i] = (int) Math.pow(this.values[i], 2);
+        for(int i = 0; i < values.length; i++){
+            values[i] = (int) Math.pow(values[i], 2);
         }
+        squaredMatrix.setValues(values);
+        squaredMatrix.setRows(rows);
+        squaredMatrix.setColumns(columns);
 
-        squaredMatrix.setRows(this.rows);
-        squaredMatrix.setColumns(this.columns);
-        squaredMatrix.setValues(this.values);
-        return squaredMatrix;*/
-        throw new OperationNotSupportedException();
+        return squaredMatrix;
     }
 
     /*
@@ -131,7 +140,32 @@ public class SparseMatrixCSC {
      * @return object that contests the transposed matrix;
      */
     public SparseMatrixCSC getTransposedMatrix() throws OperationNotSupportedException {
-        SparseMatrixCSC squaredMatrix = new SparseMatrixCSC();
-        throw new OperationNotSupportedException();
+        SparseMatrixCSC transposedMatrix = new SparseMatrixCSC();
+
+        transposedMatrix.setValues(values);
+        transposedMatrix.setRows(rows);
+
+        // Crea un nuevo arreglo, uno de filas para la matriz transpuesta
+        int[] transposedColumns = new int[matrix.length + 1];
+
+        int columnI = 0; // Indices columnas
+        int valueI = 0; // Indices valores
+        for (int i = 0; i < matrix.length; i++) {
+            transposedColumns[columnI] = valueI;
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] != 0) {
+                    values[valueI] = matrix[i][j];
+                    rows[valueI] = j;
+                    valueI++;
+                }
+            }
+            columnI++;
+        }
+
+        transposedColumns[columnI] = valueI;
+
+        transposedMatrix.setColumns(transposedColumns);
+
+        return transposedMatrix;
     }
 }

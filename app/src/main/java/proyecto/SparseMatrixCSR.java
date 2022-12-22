@@ -58,7 +58,20 @@ public class SparseMatrixCSR {
     }
 
     public int getElement(int i, int j) throws OperationNotSupportedException {
-        throw new OperationNotSupportedException();
+        // Revisa si la fila esta vacia
+        if (rows[i] == rows[i + 1]) {
+            return 0;
+        }
+
+        // Revisa si el elemnto existe en la fila
+        for (int column = rows[i]; column < rows[i + 1]; column++) {
+            if (columns[column] == j) {
+                return values[column];
+            }
+        }
+
+        // Si el elemento no se encuentra retorna cero
+        return 0;
     }
 
     public int[] getRow(int i) throws OperationNotSupportedException {

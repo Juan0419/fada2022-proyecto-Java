@@ -135,9 +135,8 @@ public class SparseMatrixCoordinateFormat {
     }
 
 
-    public void setValue(int mi, int mj, int mvalue) throws OperationNotSupportedException {
-        matrix[mi][mj] = mvalue;
-        representation(matrix);
+    public void setValue(int i, int j, int value) throws OperationNotSupportedException {
+        throw new OperationNotSupportedException();
     }
 
     /*
@@ -147,12 +146,13 @@ public class SparseMatrixCoordinateFormat {
     public SparseMatrixCoordinateFormat getSquareMatrix() throws OperationNotSupportedException {
         SparseMatrixCoordinateFormat squaredMatrix = new SparseMatrixCoordinateFormat();
 
-        for (int i = 0; i < this.rows.length; i++) {
-            this.values[i] = (int) Math.pow(this.values[i], 2);
+        for(int i = 0; i < values.length; i++){
+            values[i] = (int) Math.pow(values[i], 2);
         }
-        squaredMatrix.setRows(this.rows);
-        squaredMatrix.setColumns(this.columns);
-        squaredMatrix.setValues(this.values);
+        squaredMatrix.setValues(values);
+        squaredMatrix.setRows(rows);
+        squaredMatrix.setColumns(columns);
+
         return squaredMatrix;
     }
 
@@ -163,17 +163,21 @@ public class SparseMatrixCoordinateFormat {
     public SparseMatrixCoordinateFormat getTransposedMatrix() throws OperationNotSupportedException {
         SparseMatrixCoordinateFormat transposedMatrix = new SparseMatrixCoordinateFormat();
 
-        int transposedM[][] = new int[size_column][size_row];
+        transposedMatrix.setValues(values);
+        transposedMatrix.setRows(rows);
+        transposedMatrix.setColumns(columns);
 
-        for (int i=0; i < matrix.length; i++) {
-            for (int j=0; j < matrix[i].length; j++) {
-                transposedM[j][i] = matrix[i][j];
+        int valueI = 0;
+        for (int j=0; j < matrix[0].length; j++) {
+            for (int i=0; i < matrix.length; i++) {
+                if(matrix[i][j] != 0) {
+                    transposedMatrix.values[valueI] = matrix[i][j];
+                    transposedMatrix.rows[valueI] = j;
+                    transposedMatrix.columns[valueI] = i;
+                    valueI++;
+                }
             }
         }
-
-        transposedMatrix.setMatrix(transposedM);
-        transposedMatrix.representation(transposedM);
-
         return transposedMatrix;
     }
 
