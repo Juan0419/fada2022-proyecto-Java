@@ -38,7 +38,7 @@ public class SparseMatrixCoordinateFormat {
 
     }
 
-    public void representation(int[][] matrix){
+    public void representation(int[][] matrix) {
         ArrayList<Integer> value = new ArrayList<Integer>();
         ArrayList<Integer> row = new ArrayList<Integer>();
         ArrayList<Integer> column = new ArrayList<Integer>();
@@ -112,20 +112,20 @@ public class SparseMatrixCoordinateFormat {
 
         int result[] = new int[size_row];
 
-        for (int i = 0; i < result.length; i++){
+        for (int i = 0; i < result.length; i++) {
             result[i] = 0;
         }
 
-        for (int i = 0; i < rows.length; i++){
-            if(columns[i] == j){
+        for (int i = 0; i < rows.length; i++) {
+            if (columns[i] == j) {
                 columns1.add(this.rows[i]);
             }
         }
 
-        for (int i = 0; i < result.length; i++){
-            for (Integer elemento : columns1){
-                if(i == elemento){
-                    result[i] = this.getElement(elemento,j);
+        for (int i = 0; i < result.length; i++) {
+            for (Integer elemento : columns1) {
+                if (i == elemento) {
+                    result[i] = this.getElement(elemento, j);
                 }
             }
 
@@ -146,7 +146,7 @@ public class SparseMatrixCoordinateFormat {
     public SparseMatrixCoordinateFormat getSquareMatrix() throws OperationNotSupportedException {
         SparseMatrixCoordinateFormat squaredMatrix = new SparseMatrixCoordinateFormat();
 
-        for(int i = 0; i < values.length; i++){
+        for (int i = 0; i < values.length; i++) {
             values[i] = (int) Math.pow(values[i], 2);
         }
         squaredMatrix.setValues(values);
@@ -168,9 +168,9 @@ public class SparseMatrixCoordinateFormat {
         transposedMatrix.setColumns(columns);
 
         int valueI = 0;
-        for (int j=0; j < matrix[0].length; j++) {
-            for (int i=0; i < matrix.length; i++) {
-                if(matrix[i][j] != 0) {
+        for (int j = 0; j < matrix[0].length; j++) {
+            for (int i = 0; i < matrix.length; i++) {
+                if (matrix[i][j] != 0) {
                     transposedMatrix.values[valueI] = matrix[i][j];
                     transposedMatrix.rows[valueI] = j;
                     transposedMatrix.columns[valueI] = i;
